@@ -75,6 +75,26 @@ class Preload extends Component {
             clearTimeout(this.autoResolveTimeout);
         }
     }
+    
+    componentWillReceiveProps(nextProps) {
+        let imagesChanged = false;
+        if (nextProps.images.length !== this.props.images.length) {
+            imagesChanged = true;
+        }
+
+        for (let i = 0; i < nextProps.images.length; ++i) {
+            if (nextProps.images[i] !== this.props.images[i]) {
+                imagesChanged = true;
+                break;
+            }
+        }
+
+        if (imagesChanged) {
+            this.setState({
+                ready: false
+            })
+        }
+    }
 
     _handleSuccess() {
         if (this.autoResolveTimeout) {
